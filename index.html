@@ -135,9 +135,7 @@
     }
     .prompt{color:#BBD0FF}
     .muted{color:rgba(233,236,255,.72)}
-    .type{
-      white-space:pre-wrap;
-    }
+    .type{white-space:pre-wrap;}
     .caret{
       display:inline-block;
       width:10px;
@@ -232,7 +230,6 @@
       line-height:1.55;
       color: rgba(233,236,255,.92);
     }
-    .letter strong{color:var(--txt)}
     .footer-note{
       margin-top:12px;
       color:rgba(167,176,214,.9);
@@ -276,9 +273,9 @@
             <div class="badge">status: <span class="muted">❤️ online</span></div>
           </div>
 
-          <h1>Chaimi, mi bug favorito eres tú <span class="heart">💘</span></h1>
+          <h1>Chaimi, mi taco favorito eres tú <span class="heart">💘</span></h1>
           <p class="sub">
-            Si el mundo fuese un código, tú serías la parte que hace que todo tenga sentido.
+            Si el mundo fuese un taco, tú serías mi salsa que le da sabor.
             Hoy no vengo a impresionar… vengo a decirte lo obvio: <b>me encantas</b>.
           </p>
 
@@ -312,21 +309,24 @@
               <strong>Chaimi</strong>, en serio… gracias por existir.
             </p>
             <p style="margin:0 0 10px;">
-              No sé cómo explicarlo sin ponerme cursi, pero contigo me siento en casa.
-              Me gusta cómo eres, cómo piensas, y cómo me haces ver el mundo.
+              Contigo me siento a gusto Me gusta cómo eres, cómo piensas,
+              y cómo me haces ver el mundo.
             </p>
             <p style="margin:0 0 10px;">
-              Hoy solo quería recordarte una cosa: <strong>te elijo</strong>.
-              No por costumbre, sino porque me nace.
+              Desde el <strong>28 de febrero de 2025</strong> cambiaste mi mundo.
+              No fue casualidad, fue destino.
+            </p>
+            <p style="margin:0 0 10px;">
+              Y si volviera atrás… <strong>te volvería a elegir</strong>.
             </p>
             <p style="margin:0;">
-              Feliz San Valentín, mi niña. <span class="heart">❤️</span><br>
+              Feliz San Valentín, mi Chaimi <span class="heart">❤️</span><br>
               — Mohamed
             </p>
           </div>
 
           <div class="footer-note">
-            tip: si quieres el contador, cambia la fecha en el código (anniversary).
+            tip: el contador empieza el 2025-02-28 .
           </div>
         </div>
       </div>
@@ -341,7 +341,7 @@
             </div>
 
             <div class="mini">
-              <h2>Contador (si quieres)</h2>
+              <h2>Contador</h2>
               <div class="stat">
                 <div class="pill">
                   <div class="k">Días juntos</div>
@@ -361,14 +361,14 @@
                 </div>
               </div>
               <p class="sub" style="margin:12px 0 0;">
-                Esto se actualiza solo. Si no quieres contador, da igual, queda igual de bonito.
+                Se actualiza solo 😌
               </p>
             </div>
 
             <div class="mini" style="margin-top:14px;">
-              <h2>Frase rápida para enviarle</h2>
+              <h2>Frase rápida</h2>
               <p class="sub" id="quick" style="margin:0;">
-                “Chaimi, eres mi lugar seguro. Hoy y todos los días.” 💘
+                “Chaimi, desde el 28/02/2025 mi vida tiene más sentido. ❤️”
               </p>
             </div>
           </div>
@@ -379,8 +379,7 @@
             <div class="mini">
               <h2>Modo “GitHub vibes”</h2>
               <p class="sub" style="margin:0;">
-                Este link parece una mini web pro, pero en realidad es un mensaje para ella.
-                Dale al botón y se abre tu carta secreta 😏
+                Parece una web pro, pero es tu carta secreta para ella 😏
               </p>
               <div class="actions" style="margin-top:12px;">
                 <button class="btn" id="btnRestart">Reiniciar animación</button>
@@ -395,8 +394,8 @@
   </main>
 
   <script>
-    // ✅ Cambia esta fecha por la vuestra (formato AAAA-MM-DD)
-    const anniversary = "2024-01-01";
+    // ✅ Fecha real: 28/02/2025
+    const anniversary = "2025-02-28";
 
     const typeEl = document.getElementById("type");
     const letterEl = document.getElementById("letter");
@@ -415,7 +414,7 @@
       "Verificando compatibilidad… 100% ✔",
       "Compilando recuerdos bonitos… OK ✔",
       "Resultado:",
-      "Chaimi > Eres lo mejor que me pasó. ❤️"
+      "Chaimi > Desde el 28/02/2025 mi vida tiene más sentido. ❤️"
     ];
 
     let typing = false;
@@ -461,12 +460,14 @@
       const start = new Date(anniversary + "T00:00:00");
       const now = new Date();
       const diff = Math.max(0, now - start);
-      const mins = Math.floor(diff / 60000);
-      const hours = Math.floor(diff / 3600000);
-      const days = Math.floor(diff / 86400000);
-      daysEl.textContent = days.toLocaleString("es-ES");
-      hoursEl.textContent = (hours % 24).toLocaleString("es-ES");
-      minsEl.textContent = (mins % 60).toLocaleString("es-ES");
+
+      const totalMins = Math.floor(diff / 60000);
+      const totalHours = Math.floor(diff / 3600000);
+      const totalDays = Math.floor(diff / 86400000);
+
+      daysEl.textContent = totalDays.toLocaleString("es-ES");
+      hoursEl.textContent = (totalHours % 24).toLocaleString("es-ES");
+      minsEl.textContent = (totalMins % 60).toLocaleString("es-ES");
     }
 
     function spawnStars(){
