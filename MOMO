@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Para Chaimi 💘</title>
+  <style>
+    :root{
+      --bg:#070A12;
+      --bg2:#0B1022;
+      --txt:#E9ECFF;
+      --muted:#A7B0D6;
+      --accent:#7C5CFF;
+      --accent2:#FF4FD8;
+      --card:rgba(255,255,255,.06);
+      --stroke:rgba(255,255,255,.10);
+      --shadow: 0 18px 60px rgba(0,0,0,.55);
+      --radius: 18px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:var(--sans);
+      color:var(--txt);
+      background:
+        radial-gradient(1000px 600px at 15% 20%, rgba(124,92,255,.22), transparent 60%),
+        radial-gradient(900px 500px at 85% 30%, rgba(255,79,216,.18), transparent 55%),
+        radial-gradient(800px 600px at 50% 90%, rgba(124,92,255,.14), transparent 60%),
+        linear-gradient(180deg, var(--bg), var(--bg2));
+      overflow-x:hidden;
+    }
+    .wrap{
+      min-height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:28px 16px;
+    }
+    .grid{
+      width:min(980px, 100%);
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap:16px;
+    }
+    @media (max-width: 860px){
+      .grid{grid-template-columns: 1fr; }
+    }
+    .card{
+      background:var(--card);
+      border:1px solid var(--stroke);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      backdrop-filter: blur(10px);
+      overflow:hidden;
+      position:relative;
+    }
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background:
+        radial-gradient(420px 240px at 20% 10%, rgba(124,92,255,.22), transparent 60%),
+        radial-gradient(420px 240px at 80% 0%, rgba(255,79,216,.18), transparent 60%);
+      pointer-events:none;
+      filter:saturate(1.1);
+    }
+    .inner{position:relative; padding:18px;}
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      padding-bottom:12px;
+      margin-bottom:14px;
+    }
+    .badge{
+      font-family:var(--mono);
+      font-size:12px;
+      color:var(--muted);
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      padding:6px 10px;
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:999px;
+      background:rgba(0,0,0,.25);
+    }
+    .dot{
+      width:8px;height:8px;border-radius:999px;
+      background:linear-gradient(90deg,var(--accent),var(--accent2));
+      box-shadow:0 0 18px rgba(124,92,255,.55);
+    }
+    h1{
+      margin:10px 0 8px;
+      font-size: clamp(26px, 3.2vw, 40px);
+      line-height:1.1;
+      letter-spacing:-.02em;
+    }
+    .sub{
+      margin:0 0 14px;
+      color:var(--muted);
+      line-height:1.5;
+      font-size: 14.5px;
+    }
+    .terminal{
+      margin-top:14px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.35);
+      overflow:hidden;
+    }
+    .term-head{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:10px 12px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      font-family:var(--mono);
+      font-size:12px;
+      color:var(--muted);
+    }
+    .lights{display:flex; gap:6px; align-items:center}
+    .l{width:10px;height:10px;border-radius:50%}
+    .l.r{background:#ff5f57}
+    .l.y{background:#febc2e}
+    .l.g{background:#28c840}
+    .term-body{
+      padding:12px;
+      font-family:var(--mono);
+      font-size:13px;
+      line-height:1.6;
+      color:#E7EAFF;
+    }
+    .prompt{color:#BBD0FF}
+    .muted{color:rgba(233,236,255,.72)}
+    .type{
+      white-space:pre-wrap;
+    }
+    .caret{
+      display:inline-block;
+      width:10px;
+      animation: blink 1s steps(1,end) infinite;
+      color:var(--accent2);
+      margin-left:2px;
+    }
+    @keyframes blink { 50% { opacity:0; } }
+
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:14px;
+    }
+    .btn{
+      appearance:none;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.08);
+      color:var(--txt);
+      padding:10px 14px;
+      border-radius:12px;
+      cursor:pointer;
+      font-weight:650;
+      letter-spacing:.01em;
+      transition:.18s ease;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      user-select:none;
+    }
+    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.11); }
+    .btn.primary{
+      background: linear-gradient(90deg, rgba(124,92,255,.95), rgba(255,79,216,.85));
+      border-color: transparent;
+      box-shadow: 0 12px 32px rgba(124,92,255,.22);
+    }
+    .btn.primary:hover{ filter:brightness(1.02); transform: translateY(-1px); }
+    .icon{
+      width:18px;height:18px; display:inline-block;
+      filter: drop-shadow(0 6px 18px rgba(255,79,216,.22));
+    }
+
+    .right{
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+    }
+
+    .mini{
+      padding:16px;
+      border-radius:var(--radius);
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.28);
+    }
+    .mini h2{
+      margin:0 0 8px;
+      font-size:16px;
+      letter-spacing:-.01em;
+    }
+    .stat{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+      margin-top:10px;
+    }
+    .pill{
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:14px;
+      padding:10px 12px;
+      background: rgba(255,255,255,.05);
+    }
+    .pill .k{font-family:var(--mono); color:var(--muted); font-size:12px}
+    .pill .v{margin-top:6px; font-size:18px; font-weight:800}
+    .heart{
+      display:inline-block;
+      transform-origin:center;
+      animation: beat 1.15s ease-in-out infinite;
+    }
+    @keyframes beat{
+      0%,100%{ transform: scale(1); }
+      50%{ transform: scale(1.08); }
+    }
+
+    .letter{
+      display:none;
+      margin-top:12px;
+      padding:14px 14px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.06);
+      line-height:1.55;
+      color: rgba(233,236,255,.92);
+    }
+    .letter strong{color:var(--txt)}
+    .footer-note{
+      margin-top:12px;
+      color:rgba(167,176,214,.9);
+      font-size:12.5px;
+      line-height:1.4;
+      font-family:var(--mono);
+    }
+
+    .float{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      overflow:hidden;
+      z-index:0;
+    }
+    .spark{
+      position:absolute;
+      width:2px;height:2px;
+      background: rgba(255,255,255,.75);
+      border-radius:50%;
+      box-shadow: 0 0 10px rgba(124,92,255,.35);
+      animation: drift linear infinite;
+      opacity:.6;
+    }
+    @keyframes drift{
+      from{ transform: translateY(120vh) translateX(0); }
+      to{ transform: translateY(-20vh) translateX(80px); }
+    }
+  </style>
+</head>
+<body>
+  <div class="float" id="float"></div>
+
+  <main class="wrap">
+    <section class="grid">
+      <!-- LEFT -->
+      <div class="card">
+        <div class="inner">
+          <div class="topbar">
+            <div class="badge"><span class="dot"></span> repo: <span class="muted">chaimi-valentine</span></div>
+            <div class="badge">status: <span class="muted">❤️ online</span></div>
+          </div>
+
+          <h1>Chaimi, mi bug favorito eres tú <span class="heart">💘</span></h1>
+          <p class="sub">
+            Si el mundo fuese un código, tú serías la parte que hace que todo tenga sentido.
+            Hoy no vengo a impresionar… vengo a decirte lo obvio: <b>me encantas</b>.
+          </p>
+
+          <div class="terminal" aria-label="Terminal romántica">
+            <div class="term-head">
+              <div class="lights">
+                <span class="l r"></span><span class="l y"></span><span class="l g"></span>
+              </div>
+              <div>bash — /home/mohamed/love</div>
+            </div>
+            <div class="term-body">
+              <div><span class="prompt">$</span> <span class="muted">run</span> <span class="muted">san_valentin.sh</span></div>
+              <div class="type" id="type"></div><span class="caret">▍</span>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="btn primary" id="btnOpen">
+              <svg class="icon" viewBox="0 0 24 24" fill="none">
+                <path d="M12 21s-7-4.4-9.5-8.7C.9 9.4 2.3 6.7 5 6.1c1.6-.4 3.3.2 4.3 1.5C10.3 6.3 12 5.7 13.6 6.1c2.7.6 4.1 3.3 2.5 6.2C19 16.6 12 21 12 21Z" stroke="white" stroke-opacity=".92" stroke-width="1.7"/>
+                <path d="M7.6 11.7h8.8" stroke="white" stroke-opacity=".85" stroke-width="1.6" stroke-linecap="round"/>
+              </svg>
+              Abrir mensaje secreto
+            </button>
+
+            <button class="btn" id="btnCopy">Copiar frase bonita</button>
+          </div>
+
+          <div class="letter" id="letter">
+            <p style="margin:0 0 10px;">
+              <strong>Chaimi</strong>, en serio… gracias por existir.
+            </p>
+            <p style="margin:0 0 10px;">
+              No sé cómo explicarlo sin ponerme cursi, pero contigo me siento en casa.
+              Me gusta cómo eres, cómo piensas, y cómo me haces ver el mundo.
+            </p>
+            <p style="margin:0 0 10px;">
+              Hoy solo quería recordarte una cosa: <strong>te elijo</strong>.
+              No por costumbre, sino porque me nace.
+            </p>
+            <p style="margin:0;">
+              Feliz San Valentín, mi niña. <span class="heart">❤️</span><br>
+              — Mohamed
+            </p>
+          </div>
+
+          <div class="footer-note">
+            tip: si quieres el contador, cambia la fecha en el código (anniversary).
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT -->
+      <div class="right">
+        <div class="card">
+          <div class="inner">
+            <div class="topbar">
+              <div class="badge"><span class="dot"></span> stats: <span class="muted">relationship</span></div>
+              <div class="badge">v: <span class="muted">1.0.0</span></div>
+            </div>
+
+            <div class="mini">
+              <h2>Contador (si quieres)</h2>
+              <div class="stat">
+                <div class="pill">
+                  <div class="k">Días juntos</div>
+                  <div class="v" id="days">—</div>
+                </div>
+                <div class="pill">
+                  <div class="k">Horas</div>
+                  <div class="v" id="hours">—</div>
+                </div>
+                <div class="pill">
+                  <div class="k">Minutos</div>
+                  <div class="v" id="mins">—</div>
+                </div>
+                <div class="pill">
+                  <div class="k">“Te quiero” acumulados</div>
+                  <div class="v" id="love">∞</div>
+                </div>
+              </div>
+              <p class="sub" style="margin:12px 0 0;">
+                Esto se actualiza solo. Si no quieres contador, da igual, queda igual de bonito.
+              </p>
+            </div>
+
+            <div class="mini" style="margin-top:14px;">
+              <h2>Frase rápida para enviarle</h2>
+              <p class="sub" id="quick" style="margin:0;">
+                “Chaimi, eres mi lugar seguro. Hoy y todos los días.” 💘
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="inner">
+            <div class="mini">
+              <h2>Modo “GitHub vibes”</h2>
+              <p class="sub" style="margin:0;">
+                Este link parece una mini web pro, pero en realidad es un mensaje para ella.
+                Dale al botón y se abre tu carta secreta 😏
+              </p>
+              <div class="actions" style="margin-top:12px;">
+                <button class="btn" id="btnRestart">Reiniciar animación</button>
+                <button class="btn" id="btnGlow">Más brillo ✨</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <script>
+    // ✅ Cambia esta fecha por la vuestra (formato AAAA-MM-DD)
+    const anniversary = "2024-01-01";
+
+    const typeEl = document.getElementById("type");
+    const letterEl = document.getElementById("letter");
+    const btnOpen = document.getElementById("btnOpen");
+    const btnCopy = document.getElementById("btnCopy");
+    const btnRestart = document.getElementById("btnRestart");
+    const btnGlow = document.getElementById("btnGlow");
+    const quick = document.getElementById("quick");
+
+    const daysEl = document.getElementById("days");
+    const hoursEl = document.getElementById("hours");
+    const minsEl = document.getElementById("mins");
+
+    const lines = [
+      "Iniciando protocolo: ♥ CHAiMi ♥",
+      "Verificando compatibilidad… 100% ✔",
+      "Compilando recuerdos bonitos… OK ✔",
+      "Resultado:",
+      "Chaimi > Eres lo mejor que me pasó. ❤️"
+    ];
+
+    let typing = false;
+    let glow = false;
+
+    function sleep(ms){ return new Promise(r => setTimeout(r, ms)); }
+
+    async function typeLines(){
+      if(typing) return;
+      typing = true;
+      typeEl.textContent = "";
+      for(const line of lines){
+        await typeLine(line);
+        typeEl.textContent += "\n";
+        await sleep(180);
+      }
+      typing = false;
+    }
+
+    async function typeLine(text){
+      for(let i=0;i<text.length;i++){
+        typeEl.textContent += text[i];
+        await sleep(18 + Math.random()*24);
+      }
+    }
+
+    function openLetter(){
+      letterEl.style.display = "block";
+      letterEl.scrollIntoView({behavior:"smooth", block:"nearest"});
+    }
+
+    function copyQuick(){
+      const txt = quick.textContent.trim();
+      navigator.clipboard?.writeText(txt).then(()=>{
+        btnCopy.textContent = "Copiado ✅";
+        setTimeout(()=>btnCopy.textContent="Copiar frase bonita", 1200);
+      }).catch(()=>{
+        alert("No se pudo copiar. Cópialo manualmente:\n\n" + txt);
+      });
+    }
+
+    function updateCounter(){
+      const start = new Date(anniversary + "T00:00:00");
+      const now = new Date();
+      const diff = Math.max(0, now - start);
+      const mins = Math.floor(diff / 60000);
+      const hours = Math.floor(diff / 3600000);
+      const days = Math.floor(diff / 86400000);
+      daysEl.textContent = days.toLocaleString("es-ES");
+      hoursEl.textContent = (hours % 24).toLocaleString("es-ES");
+      minsEl.textContent = (mins % 60).toLocaleString("es-ES");
+    }
+
+    function spawnStars(){
+      const float = document.getElementById("float");
+      float.innerHTML = "";
+      const count = 46;
+      for(let i=0;i<count;i++){
+        const s = document.createElement("div");
+        s.className = "spark";
+        const left = Math.random()*100;
+        const delay = Math.random()*10;
+        const dur = 10 + Math.random()*18;
+        const size = 1 + Math.random()*2;
+        s.style.left = left + "vw";
+        s.style.animationDelay = delay + "s";
+        s.style.animationDuration = dur + "s";
+        s.style.opacity = 0.25 + Math.random()*0.55;
+        s.style.width = size + "px";
+        s.style.height = size + "px";
+        float.appendChild(s);
+      }
+    }
+
+    function toggleGlow(){
+      glow = !glow;
+      document.documentElement.style.setProperty("--card", glow ? "rgba(255,255,255,.085)" : "rgba(255,255,255,.06)");
+      document.body.style.filter = glow ? "saturate(1.08)" : "none";
+      btnGlow.textContent = glow ? "Quitar brillo" : "Más brillo ✨";
+    }
+
+    btnOpen.addEventListener("click", openLetter);
+    btnCopy.addEventListener("click", copyQuick);
+    btnRestart.addEventListener("click", () => { typeEl.textContent=""; typing=false; typeLines(); });
+    btnGlow.addEventListener("click", toggleGlow);
+
+    // init
+    spawnStars();
+    typeLines();
+    updateCounter();
+    setInterval(updateCounter, 1000);
+  </script>
+</body>
+</html>
